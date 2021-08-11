@@ -1,12 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}
+sales list
+{% endblock title %}
+
+{% block content %}
+sales list 
+<br>
+
+{% for obj in object_list %}
+    <div class="card mb-3">
+        <a href="{{ obj.get_absolute_url }}" class="card-body">{{ obj.transaction_id }}</a>
     
-</body>
-</html>
+    <!-- This also works fine w/o 'get_absolute_url': -->
+        <!-- <br>
+        <a href="{{obj.pk}}/">{{ obj.transaction_id }}</a> -->  
+    </div>
+    
+{% endfor %}
+
+{% endblock %}

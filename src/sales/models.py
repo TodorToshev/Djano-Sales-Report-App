@@ -4,8 +4,11 @@ from django.db import models
 from products.models import Product
 from customers.models import Customer
 from django.utils import timezone
+from django.shortcuts import reverse
 
 # Create your models here.
+
+
 class Position(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
@@ -18,6 +21,11 @@ class Position(models.Model):
     def save(self, *args, **kwargs):
         self.price = self.product.price * self.quantity
         return super().save(*args, **kwargs)
+
+    def get_sales_id(self):
+        sale_obj = self.sale_set.first()
+        return sale_obj.id
+
 
 class Sale(models.Model):
     transaction_id = models.CharField(max_length=12, blank=True)
@@ -40,6 +48,9 @@ class Sale(models.Model):
 
     def get_positions(self):
         return self.positions.all()
+
+    def get_absolute_url(self):
+        return reverse("sales:detail", kwargs={'pk': self.pk})
 
 
 class CSV(models.Model):
