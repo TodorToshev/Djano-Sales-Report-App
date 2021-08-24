@@ -7,7 +7,6 @@ Home
 {% endblock title %}
 
 {% block content %}
-hello world
 <hr>
 <form method="POST">
     {% csrf_token %}
@@ -18,10 +17,22 @@ hello world
 </form>
 <br>
 {% if sales_df %}
+    <p>Sales dataframe</p>
     {{ sales_df|safe}}
     <br>
+    <p>Positions dataframe</p>
     {{ positions_df|safe }}
-{% else %}
+    <br>
+    <p>Merged dataframe</p>
+    {{merged_df|safe }}
+    <br>
+    {{df|safe }}
+    <br>
+    <p>Chart</p>
+    <img src="data:image/png;base64, {{chart|safe}}">
+    <br>
+
+    {% else %}
     <h3>No data.</h3>
 {% endif %}
 
